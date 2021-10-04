@@ -1,0 +1,50 @@
+Label,Ontology ID
+Hematopoeitic Stem Cell,CL:0000037
+Erythroid Megakaryocyte Progenitor,CL:0000050
+Common Lymphoid Progenitor,CL:0000051
+Platelet,CL:0000233
+Macrophage,CL:0000235
+ASDC,CL:0000451
+Stromal,CL:0000499
+Progenitor Megakaryocyte,CL:0000553
+Granulocyte Monocyte Progenitor,CL:0000557
+NK Proliferating,CL:0000623
+CD4 T,CL:0000624
+CD8 T,CL:0000625
+ASDC_mDC,CL:0000782
+pDC,CL:0000784
+B intermediate lambda,CL:0000785
+Plasma,CL:0000786
+Memory B,CL:0000787
+Naive B,CL:0000788
+gdT_4,CL:0000798
+Treg Naive,CL:0000815
+Transitional B,CL:0000818
+Proliferating Natural Killer,CL:0000824
+Progenitor B,CL:0000826
+CD4 Naive,CL:0000895
+CD4 Proliferating,CL:0000896
+CD4 Memory,CL:0000897
+CD8 Naive,CL:0000900
+CD8 Proliferating,CL:0000906
+CD8 Memory,CL:0000909
+CD4 CTL,CL:0000934
+dnT_2,CL:0000935
+Natural Killer CD56+,CL:0000938
+Natural Killer,CL:0000939
+Mucosal associated invariant T,CL:0000940
+Plasmablast,CL:0000980
+Precursor Plasmacytoid Dendritic Cell,CL:0000992
+Precursor Myeloid Dendritic Dell,CL:0001029
+CD4 Effector,CL:0001044
+CD8 Effector 3,CL:0001050
+CD14 Monocyte,CL:0001054
+Plasmacytoid Dendritic Cell,CL:0001058
+ILC,CL:0001065
+Basophil Eosinophil Mast Progenitor,CL:0002028
+CD14 Mono,CL:0002057
+Conventional Dendritic Cell 1,CL:0002394
+CD16 Monocyte,CL:0002396
+Conventional Dendritic Cell 2,CL:0002399
+other T,CL:0002419
+HSPC,CL:0008001
