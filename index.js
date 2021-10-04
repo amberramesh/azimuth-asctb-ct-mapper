@@ -14,17 +14,17 @@ if (!fs.existsSync(OUTPUT_DIR)){
 }
 
 const CTMatchType = {
-  ID: 1,
-  Name: 2
+  ID: 'ID',
+  Name: 'Name'
 }
 
 const configs = [
   {
     name: 'Kidney',
     annotations: [
-      'kidney_l1.csv',
-      'kidney_l2.csv',
-      'kidney_l3.csv'
+      'kidney_l1',
+      'kidney_l2',
+      'kidney_l3'
     ],
     masterTable: 'Kidney_v1.1_DRAFT',
     matchType: CTMatchType.ID
@@ -32,10 +32,10 @@ const configs = [
   {
     name: 'Brain',
     annotations: [
-      'humanbrain_class.csv',
-      'humanbrain_cluster.csv',
-      'humanbrain_crossspecies.csv',
-      'humanbrain_subclass.csv'
+      'humanbrain_class',
+      'humanbrain_cluster',
+      'humanbrain_crossspecies',
+      'humanbrain_subclass'
     ],
     masterTable: 'Brain_v1.1_DRAFT',
     matchType: CTMatchType.Name
@@ -43,8 +43,8 @@ const configs = [
   {
     name: 'Lung',
     annotations: [
-      'lung_l1.csv',
-      'lung_l2.csv'
+      'lung_l1',
+      'lung_l2'
     ],
     masterTable: 'Lung_v1.1_DRAFT',
     matchType: CTMatchType.ID
@@ -52,7 +52,7 @@ const configs = [
   {
     name: 'Pancreas',
     annotations: [
-      'pancreas.csv'
+      'pancreas'
     ],
     masterTable: 'Pancreas_v1.0_DRAFT',
     matchType: CTMatchType.ID
@@ -60,22 +60,23 @@ const configs = [
   {
     name: 'Bone_Marrow_Blood',
     annotations: [
-      'pbmc1.csv',
-      'pbmc2.csv',
-      'pbmc3.csv',
-      'bonemarrow_l1.csv',
-      'bonemarrow_l2.csv'
+      'pbmc1',
+      'pbmc2',
+      'pbmc3',
+      'bonemarrow_l1',
+      'bonemarrow_l2'
     ],
     masterTable: 'Bone Marrow_Blood_v1.1_DRAFT',
     matchType: CTMatchType.ID
   }
 ]
+const summaryList = []
 
 for (const { name, annotations, masterTable, matchType } of configs) {
   // Create annotation map
   const annotationMap = new Map()
   for (const file of annotations) {
-    const textData = await (await fetch(urljoin(ANNOTATION_FILES_BASE_PATH, file))).text()
+    const textData = await (await fetch(urljoin(ANNOTATION_FILES_BASE_PATH, `${file}.csv`))).text()
     if (!textData) {
       console.error('Could not fetch annotation files for ' + name)
       continue
@@ -94,6 +95,7 @@ for (const { name, annotations, masterTable, matchType } of configs) {
   }
 
   // Search master table for CTs
+  const originalSize = annotationMap.size
   let commonValues = 0
   const asctbText = await (await fetch(urljoin(MASTER_TABLE_BASE_PATH, `&sheet=${masterTable}`))).text()
   const splitLines = asctbText.split('\n')
@@ -113,9 +115,22 @@ for (const { name, annotations, masterTable, matchType } of configs) {
         break
       }
     }
+
   })
 
+  // Create summary data
   console.log(`${commonValues} values found for ${name}`)
+  summaryList.push({
+    'Dataset': name,
+    'Azimuth Annotation Files': annotations.join(', '),
+    'ASCT+B Table': masterTable,
+    'Present in ASCT+B': commonValues,
+    'Absent in ASCT+B': originalSize - commonValues,
+    'Total Azimuth CTs': originalSize,
+    'Match Strategy': matchType
+  })
+
+  // Write filtered annotation file
   const filteredAnnotations = d3.csvFormat(
     Array.from(annotationMap)
       .sort(([key1], [key2]) => key1.localeCompare(key2))
@@ -135,3 +150,11 @@ for (const { name, annotations, masterTable, matchType } of configs) {
   
   fs.writeFileSync(path.join(OUTPUT_DIR, `${name}.csv`), filteredAnnotations, { encoding: 'utf-8', flag: 'w' })
 }
+
+// Write summary file
+const summaryCsv = d3.csvFormat(
+  Array.from(summaryList)
+    .sort((s1, s2) => s1['Dataset'].localeCompare(s2['Dataset']))
+)
+
+fs.writeFileSync(path.join(OUTPUT_DIR, 'Summary.csv'), summaryCsv, { encoding: 'utf-8', flag: 'w' })

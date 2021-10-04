@@ -1,0 +1,6 @@
+Dataset,Azimuth Annotation Files,ASCT+B Table,Present in ASCT+B,Absent in ASCT+B,Total Azimuth CTs,Match Strategy
+Bone_Marrow_Blood,"pbmc1, pbmc2, pbmc3, bonemarrow_l1, bonemarrow_l2",Bone Marrow_Blood_v1.1_DRAFT,7,49,56,ID
+Brain,"humanbrain_class, humanbrain_cluster, humanbrain_crossspecies, humanbrain_subclass",Brain_v1.1_DRAFT,124,65,189,Name
+Kidney,"kidney_l1, kidney_l2, kidney_l3",Kidney_v1.1_DRAFT,23,18,41,ID
+Lung,"lung_l1, lung_l2",Lung_v1.1_DRAFT,14,24,38,ID
+Pancreas,pancreas,Pancreas_v1.0_DRAFT,2,10,12,ID
